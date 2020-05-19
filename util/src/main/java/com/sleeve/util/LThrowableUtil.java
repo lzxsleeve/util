@@ -9,15 +9,16 @@ import java.io.StringWriter;
  * Create by liuzx on date 2019/7/15.
  */
 public class LThrowableUtil {
+
+    /**
+     * Throwable转String
+     */
     public static String getStackTrace(Throwable throwable){
         StringWriter stringWriter = new StringWriter();
-        PrintWriter printWriter = new PrintWriter(stringWriter);
 
-        try {
+        try (PrintWriter printWriter = new PrintWriter(stringWriter)) {
             throwable.printStackTrace(printWriter);
             return stringWriter.toString();
-        } finally {
-            printWriter.close();
         }
     }
 }
