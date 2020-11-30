@@ -21,11 +21,11 @@ public class LAppInfo {
     /**
      * 获取当前程序版本号
      */
-    public static int getVersionCode() {
+    public static long getVersionCode() {
         try {
             PackageInfo packageInfo = UtilConfig.mContext.getPackageManager().getPackageInfo(
                     UtilConfig.mContext.getPackageName(), PackageManager.GET_ACTIVITIES);
-            return packageInfo.versionCode;
+            return packageInfo.getLongVersionCode();
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
             LToast.show("获取版本号异常");

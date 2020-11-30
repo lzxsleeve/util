@@ -58,6 +58,8 @@ public class LSPUtil {
             LSPUtil.getPreferences(name).edit().putBoolean(key, (Boolean) value).apply();
         } else if (value instanceof Long) {
             LSPUtil.getPreferences(name).edit().putLong(key, (Long) value).apply();
+        } else if (value instanceof Float) {
+            LSPUtil.getPreferences(name).edit().putFloat(key, (Float) value).apply();
         }
         return this;
     }
@@ -71,6 +73,8 @@ public class LSPUtil {
             return LSPUtil.getPreferences(name).getBoolean(key, (Boolean) defValue);
         } else if (defValue instanceof Long) {
             return LSPUtil.getPreferences(name).getLong(key, (Long) defValue);
+        } else if (defValue instanceof Float) {
+            return LSPUtil.getPreferences(name).getFloat(key, (Float) defValue);
         }
         return null;
     }
