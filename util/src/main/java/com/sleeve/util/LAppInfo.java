@@ -56,6 +56,13 @@ public class LAppInfo {
     }
 
     /**
+     * 获取目标SDK版本
+     */
+    public static int getTargetSdkVersion() {
+        return UtilConfig.mContext.getApplicationInfo().targetSdkVersion;
+    }
+
+    /**
      * 是否安装了此 App
      */
     public static boolean hasInstallApk(String packageName) {

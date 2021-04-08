@@ -2,7 +2,7 @@ package com.sleeve.util;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Build;
 import android.util.TypedValue;
 import android.view.WindowManager;
@@ -36,12 +36,13 @@ public class LDisplay {
      * 获取屏幕宽度
      */
     public static int getDisplayWidth() {
-        WindowManager windowManager = (WindowManager) UtilConfig.mContext.getSystemService(
-                Context.WINDOW_SERVICE);
+        if (LAppInfo.getTargetSdkVersion() < 30) {
+            return UtilConfig.mContext.getResources().getDisplayMetrics().widthPixels;
+        }
+        WindowManager windowManager = (WindowManager) UtilConfig.mContext.getSystemService(Context.WINDOW_SERVICE);
         if (windowManager != null) {
-            Point point = new Point();
-            windowManager.getDefaultDisplay().getSize(point);
-            return point.x;
+            Rect rect = windowManager.getMaximumWindowMetrics().getBounds();
+            return Math.abs(rect.width());
         } else {
             return -1;
         }
@@ -51,12 +52,13 @@ public class LDisplay {
      * 获取屏幕高度
      */
     public static int getDisplayHeight() {
-        WindowManager windowManager = (WindowManager) UtilConfig.mContext.getSystemService(
-                Context.WINDOW_SERVICE);
+        if (LAppInfo.getTargetSdkVersion() < 30) {
+            return UtilConfig.mContext.getResources().getDisplayMetrics().heightPixels;
+        }
+        WindowManager windowManager = (WindowManager) UtilConfig.mContext.getSystemService(Context.WINDOW_SERVICE);
         if (windowManager != null) {
-            Point point = new Point();
-            windowManager.getDefaultDisplay().getSize(point);
-            return point.y;
+            Rect rect = windowManager.getMaximumWindowMetrics().getBounds();
+            return Math.abs(rect.height());
         } else {
             return -1;
         }
@@ -80,12 +82,15 @@ public class LDisplay {
      * @return int[]{width, height}
      */
     public static int[] getScreenResolution() {
-        WindowManager wm = (WindowManager) (UtilConfig.mContext.getSystemService(Context.WINDOW_SERVICE));
-        Point point = new Point();
-        wm.getDefaultDisplay().getRealSize(point);
-        int width = point.x;
-        int height = point.y;
-        return new int[]{width, height};
-
+        if (LAppInfo.getTargetSdkVersion() < 30) {
+            return new int[]{getDisplayWidth(), getDisplayHeight()};
+        }
+        WindowManager windowManager = (WindowManager) UtilConfig.mContext.getSystemService(Context.WINDOW_SERVICE);
+        if (windowManager != null) {
+            Rect rect = windowManager.getMaximumWindowMetrics().getBounds();
+            return new int[]{Math.abs(rect.width()), Math.abs(rect.height())};
+        } else {
+            return new int[]{0, 0};
+        }
     }
 }
