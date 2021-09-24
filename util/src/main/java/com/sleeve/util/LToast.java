@@ -33,6 +33,12 @@ public class LToast {
         }
     }
 
+    public static void setDuration(int duration) {
+        if (mToast != null) {
+            mToast.setDuration(duration);
+        }
+    }
+
     @Nullable
     private static Toast initToast() {
         if (mToast != null) {
